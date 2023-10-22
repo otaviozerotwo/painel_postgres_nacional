@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+require('dotenv').config();
 
 const connection = new Pool({
     host: process.env.POSTGRES_HOST,
