@@ -1,4 +1,4 @@
-const connection = require('./connection');
+// const connection = require('./connection');
 
 const formatDate = (date) => {
     const year = date.getFullYear();
@@ -11,9 +11,9 @@ const formatDate = (date) => {
 const dataAtual = new Date();
 const dataFormatada = [formatDate(dataAtual)];
   
-const sql = `SELECT vs_pdv, hr_vd, cd_cx FROM pdv_vd WHERE dt_vd = $1 AND cd_cx = 11 LIMIT 1;`;
+const sql = `SELECT vs_pdv, hr_vd, cd_cx FROM pdv_vd WHERE dt_vd = $1 AND cd_cx = 10 LIMIT 1;`;
 
-const getAll = async () => {
+const getAll = async (connection) => {
     const consulta = await connection.query(sql, dataFormatada);
     return consulta;
 };
