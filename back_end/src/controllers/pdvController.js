@@ -47,19 +47,31 @@ const hosts = [
     process.env.POSTGRES_HOST_LJ43
 ];
 
-const getAll = async (_request, response) => {
+const getQtdCuponsFilial = async (_request, response) => {
     const results = [];
 
     for(const host of hosts){
         const con = connection(host);
-        const consulta = await pdvModel.getAll(con);
+        const consulta = await pdvModel.getQtdCuponsFilial(con);
         results.push({ host, rows: consulta.rows });
-
     }
 
     return response.status(200).json(results);
 };
 
+// const getDadosFilial = async (_request, response) => {
+//     const results = [];
+
+//     for(const host of hosts){
+//         const con = connection(host);
+//         const consulta = await pdvModel.getDadosFilial(con);
+//         results.push({ rows: consulta.rows });
+//     }
+
+//     return response.status(200).json(results);
+// };
+
 module.exports = {
-    getAll
+    getQtdCuponsFilial,
+    // getDadosFilial
 };
