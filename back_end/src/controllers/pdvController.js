@@ -30,7 +30,7 @@ const hosts = [
     process.env.POSTGRES_HOST_LJ26,
     process.env.POSTGRES_HOST_LJ27,
     process.env.POSTGRES_HOST_LJ28,
-    // process.env.POSTGRES_HOST_LJ29,
+    process.env.POSTGRES_HOST_LJ29,
     process.env.POSTGRES_HOST_LJ30,
     process.env.POSTGRES_HOST_LJ31,
     process.env.POSTGRES_HOST_LJ32,
@@ -47,31 +47,24 @@ const hosts = [
     process.env.POSTGRES_HOST_LJ43
 ];
 
-const getQtdCuponsFilial = async (_request, response) => {
+const getAll = async (_request, response) => {
     const results = [];
 
     for(const host of hosts){
         const con = connection(host);
-        const consulta = await pdvModel.getQtdCuponsFilial(con);
-        results.push({ host, rows: consulta.rows });
+        
+        const promise_1 = pdvModel.getDadosFilial(con);
+        const promise_2 = pdvModel.getQtdCuponsFilial(con);
+
+        const [result_1, result_2] = await Promise.all([promise_1, promise_2]);
+        
+        results.push({ rows: result_1.rows });
+        results.push({ rows: result_2.rows });
     }
 
     return response.status(200).json(results);
 };
 
-// const getDadosFilial = async (_request, response) => {
-//     const results = [];
-
-//     for(const host of hosts){
-//         const con = connection(host);
-//         const consulta = await pdvModel.getDadosFilial(con);
-//         results.push({ rows: consulta.rows });
-//     }
-
-//     return response.status(200).json(results);
-// };
-
 module.exports = {
-    getQtdCuponsFilial,
-    // getDadosFilial
+    getAll
 };
