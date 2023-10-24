@@ -21,7 +21,16 @@ const getDadosFilial = async (connection) => {
     return consulta;
 }
 
+const getProcedureDescontos = async (connection) => {
+    const codigoFilial = [1];
+    // const codigoProduto = [563780];
+    const sql = `SELECT cd_tbl_desc, ds_desconto, * FROM p_est_prod_descontos(1,$1,563780,0 , '0', 0, 1 , 1, 0, 0, 0,0,0);`;
+    const consulta = await connection.query(sql, codigoFilial);
+    return consulta;
+}
+
 module.exports = {
     getQtdCuponsFilial,
-    getDadosFilial
+    getDadosFilial,
+    getProcedureDescontos
 };
